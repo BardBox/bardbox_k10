@@ -65,6 +65,7 @@ export default function Testimonials() {
         scrollTrigger: {
           trigger: cardsRef.current,
           start: 'top 75%',
+          once: true,
         },
       });
     }

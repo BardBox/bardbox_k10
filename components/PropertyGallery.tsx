@@ -76,6 +76,7 @@ export default function PropertyGallery() {
         scrollTrigger: {
           trigger: cardsRef.current,
           start: 'top 80%',
+          once: true,
         },
       });
     }

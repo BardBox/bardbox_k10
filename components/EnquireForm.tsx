@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
+import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -61,22 +62,49 @@ export default function EnquireForm() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      // Replace these with your actual keys from EmailJS Dashboard
+      // https://dashboard.emailjs.com/admin
+      const SERVICE_ID = 'service_6j8b1zp';
+      const TEMPLATE_ID = 'template_h46141a';
+      const PUBLIC_KEY = 'ns56r2o1H1qQlljJh'; // e.g., 'user_12345abcdef'
 
-    console.log('Form submitted:', formData);
-    alert('Thank you for your enquiry! We will contact you soon.');
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        budget: formData.budget,
+        property_type: formData.propertyType.join(', '),
+        message: formData.message,
+      };
 
-    // Reset form
-    setFormData({
-      name: '',
-      phone: '',
-      email: '',
-      budget: '',
-      propertyType: [],
-      message: '',
-    });
-    setIsSubmitting(false);
+      const response = await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        templateParams,
+        PUBLIC_KEY
+      );
+
+      if (response.status === 200) {
+        console.log('SUCCESS!', response.status, response.text);
+        alert('Thank you! Your enquiry has been sent successfully.');
+
+        // Reset form
+        setFormData({
+          name: '',
+          phone: '',
+          email: '',
+          budget: '',
+          propertyType: [],
+          message: '',
+        });
+      }
+    } catch (error) {
+      console.error('FAILED...', error);
+      alert('Failed to send message. Please try again later or contact us directly at +91 80006 26586');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -109,52 +137,10 @@ export default function EnquireForm() {
                   className="w-full h-auto drop-shadow-2xl"
                   priority
                 />
-                <div className="absolute -bottom-4 -right-4 bg-primary-gold text-white px-6 py-3 rounded-lg shadow-xl">
-                  <p className="text-sm font-semibold">Premium Property</p>
-                </div>
               </div>
             </div>
 
-            <div className="space-y-4 pt-4">
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-primary-rust/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 text-primary-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-neutral-charcoal mb-1">Visit Our Office</h4>
-                  <p className="text-neutral-charcoal/70">605/6, Signet Hub, Akshar Chowk, Akota, Vadodara</p>
-                </div>
-              </div>
 
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-primary-rust/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 text-primary-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-neutral-charcoal mb-1">Call Us</h4>
-                  <a href="tel:+917862002567" className="text-primary-rust hover:text-primary-orange transition-colors">
-                    +91 7862002567
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-primary-rust/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 text-primary-rust" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-neutral-charcoal mb-1">Working Hours</h4>
-                  <p className="text-neutral-charcoal/70">Monday - Friday, 10:00 AM - 5:00 PM</p>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Right: Form */}
@@ -236,11 +222,10 @@ export default function EnquireForm() {
                   {propertyTypes.map((type) => (
                     <label
                       key={type}
-                      className={`flex items-center space-x-2 p-3 border-2 rounded-lg cursor-pointer transition-all ${
-                        formData.propertyType.includes(type)
-                          ? 'border-primary-rust bg-primary-rust/5'
-                          : 'border-gray-300 hover:border-primary-rust/50'
-                      }`}
+                      className={`flex items-center space-x-2 p-3 border-2 rounded-lg cursor-pointer transition-all ${formData.propertyType.includes(type)
+                        ? 'border-primary-rust bg-primary-rust/5'
+                        : 'border-gray-300 hover:border-primary-rust/50'
+                        }`}
                     >
                       <input
                         type="checkbox"

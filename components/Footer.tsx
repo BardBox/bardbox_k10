@@ -18,7 +18,6 @@ export default function Footer() {
     { label: 'Commercial Shops', href: '#properties' },
     { label: 'Office Spaces', href: '#properties' },
     { label: 'Showrooms', href: '#properties' },
-    { label: 'Residential', href: '#properties' },
   ];
 
   return (
@@ -44,7 +43,7 @@ export default function Footer() {
             {/* Social Links */}
             <div className="flex space-x-4">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/k10group/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-rust transition-all duration-300"
@@ -54,17 +53,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-rust transition-all duration-300"
-              >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-                </svg>
-              </a>
-              <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/k10.group/?hl=en"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-rust transition-all duration-300"
@@ -74,7 +63,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://in.linkedin.com/company/k10-group-vadodara"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary-rust transition-all duration-300"
@@ -135,20 +124,30 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <div>
-                  <p className="text-gray-300">605/6, Signet Hub</p>
-                  <p className="text-gray-300">Akshar Chowk, Akota</p>
-                  <p className="text-gray-300">Vadodara, Gujarat</p>
-                </div>
+                <a
+                  href="https://www.google.com/maps/dir//K10+INDEX+SURYA+PALACE+HOTEL+opp.+GRAND+MERCURE,+Parshuram+Nagar,+Sayajiganj+Vadodara,+Gujarat+390007/@22.3064374,73.1840837,16z/data=!4m5!4m4!1m0!1m2!1m1!1s0x395fcfecee5d292f:0xe21fbd0742f8452f"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group"
+                >
+                  <p className="text-gray-300 group-hover:text-primary-rust transition-colors">K10 INDEX, Opp. Grand Mercure</p>
+                  <p className="text-gray-300 group-hover:text-primary-rust transition-colors">Sayajiganj, Vadodara</p>
+                  <p className="text-gray-300 group-hover:text-primary-rust transition-colors">Gujarat, 390007</p>
+                </a>
               </li>
 
-              <li className="flex items-center space-x-3">
-                <svg className="w-6 h-6 text-primary-rust flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <li className="flex items-start space-x-3">
+                <svg className="w-6 h-6 text-primary-rust flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <a href="tel:+917862002567" className="text-gray-300 hover:text-primary-rust transition-colors">
-                  +91 7862002567
-                </a>
+                <div className="flex flex-col space-y-1">
+                  <a href="tel:+918000626586" className="text-gray-300 hover:text-primary-rust transition-colors">
+                    +91 80006 26586
+                  </a>
+                  <a href="tel:+917228095566" className="text-gray-300 hover:text-primary-rust transition-colors">
+                    +91 72280 95566
+                  </a>
+                </div>
               </li>
 
               <li className="flex items-center space-x-3">

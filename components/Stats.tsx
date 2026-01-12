@@ -77,6 +77,7 @@ export default function Stats() {
         scrollTrigger: {
           trigger: statsRef.current,
           start: 'top 75%',
+          once: true,
         },
       });
 
@@ -92,8 +93,9 @@ export default function Stats() {
             scrollTrigger: {
               trigger: element,
               start: 'top 80%',
+              once: true,
             },
-            onUpdate: function() {
+            onUpdate: function () {
               const target = this.targets()[0] as HTMLElement;
               target.textContent = Math.ceil(parseFloat(target.textContent || '0')).toString();
             },
