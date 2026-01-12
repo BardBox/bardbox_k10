@@ -66,7 +66,7 @@ export default function EnquireForm() {
       // Replace these with your actual keys from EmailJS Dashboard
       // https://dashboard.emailjs.com/admin
       const SERVICE_ID = 'service_2bieqaa';
-      const TEMPLATE_ID = 'template_h46141a';
+      const TEMPLATE_ID = 'template_hoo551i';
       const PUBLIC_KEY = 'ns56r2o1H1qQlljJh'; // e.g., 'user_12345abcdef'
 
       const templateParams = {
