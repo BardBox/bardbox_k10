@@ -8,8 +8,9 @@ export default function Preloader() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const minLoaderTime = 1000; // Increased to 1000ms as requested "AT LEAST 500ms" and user seems to want to see it
+        const minLoaderTime = 1000;
         const startTime = Date.now();
+        let timeoutId: NodeJS.Timeout;
 
         const animateOut = () => {
             gsap.to('.preloader-container', {
@@ -26,13 +27,25 @@ export default function Preloader() {
             setTimeout(animateOut, remainingTime);
         };
 
-        if (document.readyState === 'complete') {
+        // Safety timeout in case load event fails or is missed
+        timeoutId = setTimeout(() => {
             handleLoad();
+        }, 4000);
+
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            handleLoad();
+            clearTimeout(timeoutId);
         } else {
-            window.addEventListener('load', handleLoad);
+            window.addEventListener('load', () => {
+                handleLoad();
+                clearTimeout(timeoutId);
+            });
         }
 
-        return () => window.removeEventListener('load', handleLoad);
+        return () => {
+            window.removeEventListener('load', handleLoad);
+            if (timeoutId) clearTimeout(timeoutId);
+        };
     }, []);
 
     if (!isLoading) return null;
