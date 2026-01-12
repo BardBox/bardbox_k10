@@ -93,9 +93,14 @@ export default function Location() {
                     </div>
                     <div>
                       <h4 className="font-semibold text-neutral-charcoal mb-1">Call Us</h4>
-                      <a href="tel:+917862002567" className="text-primary-rust font-semibold hover:underline">
-                        +91 78620 02567
-                      </a>
+                      <div className="flex flex-col gap-1">
+                        <a href="tel:+918000626586" className="text-primary-rust font-semibold hover:underline">
+                          +91 80006 26586
+                        </a>
+                        <a href="tel:+917228095566" className="text-primary-rust font-semibold hover:underline">
+                          +91 72280 95566
+                        </a>
+                      </div>
                     </div>
                   </div>
 
