@@ -65,7 +65,7 @@ export default function PropertyGallery() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!prefersReducedMotion && cardsRef.current) {
-      const cards = cardsRef.current.querySelectorAll('.property-card');
+      const cards = gsap.utils.toArray('.property-card');
 
       gsap.from(cards, {
         y: 100,
@@ -76,11 +76,12 @@ export default function PropertyGallery() {
         scrollTrigger: {
           trigger: cardsRef.current,
           start: 'top 80%',
+          toggleActions: 'play none none none',
           once: true,
         },
       });
     }
-  }, []);
+  }, { scope: cardsRef });
 
   return (
     <section id="properties" ref={sectionRef} className="py-24 bg-white">

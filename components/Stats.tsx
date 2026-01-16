@@ -65,9 +65,9 @@ export default function Stats() {
   useGSAP(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (!prefersReducedMotion && statsRef.current) {
+    if (!prefersReducedMotion) {
       // Animate stat cards
-      const cards = statsRef.current.querySelectorAll('.stat-card');
+      const cards = gsap.utils.toArray('.stat-card');
       gsap.from(cards, {
         y: 60,
         opacity: 0,
@@ -77,6 +77,7 @@ export default function Stats() {
         scrollTrigger: {
           trigger: statsRef.current,
           start: 'top 75%',
+          toggleActions: 'play none none none',
           once: true,
         },
       });
@@ -93,6 +94,7 @@ export default function Stats() {
             scrollTrigger: {
               trigger: element,
               start: 'top 80%',
+              toggleActions: 'play none none none',
               once: true,
             },
             onUpdate: function () {
@@ -103,7 +105,7 @@ export default function Stats() {
         }
       });
     }
-  }, []);
+  }, { scope: statsRef });
 
   return (
     <section id="about" ref={sectionRef} className="py-20 bg-gradient-to-br from-neutral-charcoal-dark via-neutral-charcoal to-neutral-charcoal-dark text-white relative overflow-hidden">

@@ -24,11 +24,12 @@ export default function Location() {
         scrollTrigger: {
           trigger: contentRef.current,
           start: 'top 80%',
+          toggleActions: 'play none none none',
           once: true,
         },
       });
     }
-  }, []);
+  }, { scope: contentRef });
 
   return (
     <section ref={sectionRef} className="relative py-24 overflow-hidden" style={{ backgroundColor: '#202020' }}>

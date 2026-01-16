@@ -54,7 +54,7 @@ export default function Testimonials() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (!prefersReducedMotion && cardsRef.current) {
-      const cards = cardsRef.current.querySelectorAll('.testimonial-card');
+      const cards = gsap.utils.toArray('.testimonial-card');
 
       gsap.from(cards, {
         y: 80,
@@ -65,11 +65,12 @@ export default function Testimonials() {
         scrollTrigger: {
           trigger: cardsRef.current,
           start: 'top 75%',
+          toggleActions: 'play none none none',
           once: true,
         },
       });
     }
-  }, []);
+  }, { scope: cardsRef });
 
   return (
     <section id="testimonials" ref={sectionRef} className="py-20 bg-gradient-to-br from-neutral-cream via-white to-neutral-gray">

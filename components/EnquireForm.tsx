@@ -5,7 +5,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
-import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
+import { supabase } from '../utils/supabase';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,7 +23,9 @@ export default function EnquireForm() {
   const formRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    if (formRef.current) {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!prefersReducedMotion && formRef.current) {
       gsap.from(formRef.current.children, {
         y: 60,
         opacity: 0,
@@ -33,11 +35,12 @@ export default function EnquireForm() {
         scrollTrigger: {
           trigger: formRef.current,
           start: 'top 80%',
+          toggleActions: 'play none none none',
           once: true,
         },
       });
     }
-  }, []);
+  }, { scope: formRef });
 
   const budgetOptions = [
     '50 Lacs to below',
@@ -66,40 +69,39 @@ export default function EnquireForm() {
     try {
       // Replace these with your actual keys from EmailJS Dashboard
       // https://dashboard.emailjs.com/admin
-      const SERVICE_ID = 'service_2bieqaa';
-      const TEMPLATE_ID = 'template_hoo551i';
-      const PUBLIC_KEY = 'ns56r2o1H1qQlljJh'; // e.g., 'user_12345abcdef'
 
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        phone: formData.phone,
-        budget: formData.budget,
-        property_type: formData.propertyType.join(', '),
-        message: formData.message,
-      };
+      // Save to Supabase
+      const { error: supabaseError } = await supabase
+        .from('enquiries')
+        .insert([
+          {
+            name: formData.name,
+            phone: formData.phone,
+            email: formData.email,
+            budget: formData.budget,
+            property_type: formData.propertyType.join(', '),
+            message: formData.message,
+          },
+        ]);
 
-      const response = await emailjs.send(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        templateParams,
-        PUBLIC_KEY
-      );
-
-      if (response.status === 200) {
-        console.log('SUCCESS!', response.status, response.text);
-        alert('Thank you! Your enquiry has been sent successfully.');
-
-        // Reset form
-        setFormData({
-          name: '',
-          phone: '',
-          email: '',
-          budget: '',
-          propertyType: [],
-          message: '',
-        });
+      if (supabaseError) {
+        throw supabaseError;
       }
+
+      console.log('SUCCESS!');
+      alert('Thank you! Your enquiry has been sent successfully.');
+
+      // Reset form
+      setFormData({
+        name: '',
+        phone: '',
+        email: '',
+        budget: '',
+        propertyType: [],
+        message: '',
+      });
+
+
     } catch (error) {
       console.error('FAILED...', error);
       alert('Failed to send message. Please try again later or contact us directly at +91 80006 26586');
