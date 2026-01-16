@@ -24,6 +24,7 @@ export default function Location() {
         scrollTrigger: {
           trigger: contentRef.current,
           start: 'top 80%',
+          once: true,
         },
       });
     }

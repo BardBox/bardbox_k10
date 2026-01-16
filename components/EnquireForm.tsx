@@ -33,6 +33,7 @@ export default function EnquireForm() {
         scrollTrigger: {
           trigger: formRef.current,
           start: 'top 80%',
+          once: true,
         },
       });
     }
