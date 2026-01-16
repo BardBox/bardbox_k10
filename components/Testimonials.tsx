@@ -1,11 +1,6 @@
 'use client';
 
 import { useRef } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const testimonials = [
   {
@@ -50,27 +45,7 @@ export default function Testimonials() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (!prefersReducedMotion && cardsRef.current) {
-      const cards = gsap.utils.toArray('.testimonial-card');
-
-      gsap.from(cards, {
-        y: 80,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: cardsRef.current,
-          start: 'top 75%',
-          toggleActions: 'play none none none',
-          once: true,
-        },
-      });
-    }
-  }, { scope: cardsRef });
 
   return (
     <section id="testimonials" ref={sectionRef} className="py-20 bg-gradient-to-br from-neutral-cream via-white to-neutral-gray">

@@ -1,13 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
-import { supabase } from '../utils/supabase';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function EnquireForm() {
   const [formData, setFormData] = useState({
@@ -22,36 +16,15 @@ export default function EnquireForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (!prefersReducedMotion && formRef.current) {
-      gsap.from(formRef.current.children, {
-        y: 60,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: formRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-          once: true,
-        },
-      });
-    }
-  }, { scope: formRef });
 
   const budgetOptions = [
-    '50 Lacs to below',
-    '50 Lacs to 1 Crore',
-    '1 Crore to 1.5 Crore',
-    '1.5 Crore to 2 Crore',
-    '2 Crore to 3 Crore',
-    '3 Crore and above',
+    'Below 50 Lakhs',
+    '50 Lakhs to 1 Cr',
+    '1 Cr to 2 Cr',
+    '2 Cr+',
   ];
 
-  const propertyTypes = ['Shop', 'Office', 'Showroom', 'Residential'];
+  const propertyTypes = ['Shop', 'Office', 'Showroom', 'Terrace offices'];
 
   const handlePropertyTypeChange = (type: string) => {
     setFormData((prev) => ({
@@ -67,25 +40,23 @@ export default function EnquireForm() {
     setIsSubmitting(true);
 
     try {
-      // Replace these with your actual keys from EmailJS Dashboard
-      // https://dashboard.emailjs.com/admin
+      const response = await fetch('/api/enquire', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          budget: formData.budget,
+          property_type: formData.propertyType.join(', '),
+          message: formData.message,
+        }),
+      });
 
-      // Save to Supabase
-      const { error: supabaseError } = await supabase
-        .from('enquiries')
-        .insert([
-          {
-            name: formData.name,
-            phone: formData.phone,
-            email: formData.email,
-            budget: formData.budget,
-            property_type: formData.propertyType.join(', '),
-            message: formData.message,
-          },
-        ]);
-
-      if (supabaseError) {
-        throw supabaseError;
+      if (!response.ok) {
+        throw new Error('Failed to submit enquiry');
       }
 
       console.log('SUCCESS!');
@@ -221,7 +192,7 @@ export default function EnquireForm() {
                 <label className="block text-sm font-medium text-neutral-charcoal mb-3">
                   Property Type *
                 </label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {propertyTypes.map((type) => (
                     <label
                       key={type}

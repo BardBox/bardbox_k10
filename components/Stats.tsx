@@ -1,11 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { useRef } from 'react';
 
 const stats = [
   {
@@ -62,50 +57,7 @@ export default function Stats() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (!prefersReducedMotion) {
-      // Animate stat cards
-      const cards = gsap.utils.toArray('.stat-card');
-      gsap.from(cards, {
-        y: 60,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: statsRef.current,
-          start: 'top 75%',
-          toggleActions: 'play none none none',
-          once: true,
-        },
-      });
-
-      // Animate counter numbers
-      stats.forEach((stat, index) => {
-        const element = statsRef.current?.querySelector(`.stat-number-${index}`);
-        if (element) {
-          gsap.from(element, {
-            textContent: 0,
-            duration: 2.5,
-            ease: 'power1.out',
-            snap: { textContent: 1 },
-            scrollTrigger: {
-              trigger: element,
-              start: 'top 80%',
-              toggleActions: 'play none none none',
-              once: true,
-            },
-            onUpdate: function () {
-              const target = this.targets()[0] as HTMLElement;
-              target.textContent = Math.ceil(parseFloat(target.textContent || '0')).toString();
-            },
-          });
-        }
-      });
-    }
-  }, { scope: statsRef });
 
   return (
     <section id="about" ref={sectionRef} className="py-20 bg-gradient-to-br from-neutral-charcoal-dark via-neutral-charcoal to-neutral-charcoal-dark text-white relative overflow-hidden">
@@ -152,7 +104,7 @@ export default function Stats() {
                 {/* Counter */}
                 <div className="mb-3">
                   <span className={`stat-number-${index} text-5xl md:text-6xl font-bold text-primary-gold`}>
-                    0
+                    {stat.value}
                   </span>
                   <span className="text-5xl md:text-6xl font-bold text-primary-gold">{stat.suffix}</span>
                 </div>

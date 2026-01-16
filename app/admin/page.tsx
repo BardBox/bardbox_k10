@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { supabase } from '@/utils/supabase';
 import { useRouter } from 'next/navigation';
 
 export default function AdminLogin() {
@@ -14,16 +13,23 @@ export default function AdminLogin() {
         e.preventDefault();
         setLoading(true);
 
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
 
-        if (error) {
-            alert('Error: ' + error.message);
+            if (response.ok) {
+                router.push('/admin/dashboard');
+            } else {
+                const data = await response.json();
+                alert('Error: ' + (data.error || 'Login failed'));
+                setLoading(false);
+            }
+        } catch (error) {
+            alert('An unexpected error occurred');
             setLoading(false);
-        } else {
-            router.push('/admin/dashboard');
         }
     };
 

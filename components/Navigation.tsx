@@ -64,7 +64,7 @@ export default function Navigation() {
               Properties
             </button>
             <button
-              onClick={() => scrollToSection('contact')}
+              onClick={() => scrollToSection('enquire')}
               className={`${textColorClass} ${hoverColorClass} transition-colors font-medium`}
             >
               Contact
@@ -121,7 +121,7 @@ export default function Navigation() {
               Properties
             </button>
             <button
-              onClick={() => scrollToSection('contact')}
+              onClick={() => scrollToSection('enquire')}
               className="block w-full text-left py-2 text-neutral-charcoal hover:text-primary-rust transition-colors font-medium"
             >
               Contact

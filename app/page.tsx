@@ -3,19 +3,18 @@ import Hero from '@/components/Hero';
 import PropertyGallery from '@/components/PropertyGallery';
 import Location from '@/components/Location';
 import EnquireForm from '@/components/EnquireForm';
+import VirtualTour from '@/components/VirtualTour';
 import Footer from '@/components/Footer';
-import Preloader from '@/components/Preloader';
-
 export default function Home() {
   return (
     <>
-      <Preloader />
       <Navigation />
       <main className="overflow-x-hidden">
         <Hero />
+        <EnquireForm />
         <PropertyGallery />
         <Location />
-        <EnquireForm />
+        <VirtualTour />
       </main>
       <Footer />
     </>

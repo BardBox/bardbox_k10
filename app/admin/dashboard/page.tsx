@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/utils/supabase';
 import { useRouter } from 'next/navigation';
 import * as XLSX from 'xlsx';
 
@@ -25,47 +24,37 @@ export default function Dashboard() {
     const router = useRouter();
 
     useEffect(() => {
-        const checkUser = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) {
-                router.push('/admin');
-            } else {
-                fetchEnquiries();
-            }
-        };
-        checkUser();
+        fetchEnquiries();
     }, [router]);
 
     const fetchEnquiries = async () => {
         setLoading(true);
-        let query = supabase
-            .from('enquiries')
-            .select('*')
-            .order('created_at', { ascending: false });
+        try {
+            const params = new URLSearchParams();
+            if (startDate) params.append('startDate', startDate);
+            if (endDate) params.append('endDate', endDate);
 
-        if (startDate) {
-            // Add time to start date to compare correctly
-            query = query.gte('created_at', `${startDate}T00:00:00`);
-        }
-        if (endDate) {
-            // Add time to end date to ensure the whole day is included
-            query = query.lte('created_at', `${endDate}T23:59:59`);
-        }
+            const res = await fetch(`/api/admin/enquiries?${params.toString()}`);
 
-        const { data, error } = await query;
+            if (res.status === 401) {
+                router.push('/admin');
+                return;
+            }
 
-        if (error) {
-            console.error('Error fetching enquiries:', error);
-        } else {
+            if (!res.ok) throw new Error('Failed to fetch');
+
+            const data = await res.json();
             setEnquiries(data || []);
-            // Clear selection when filters change
             setSelectedIds(new Set());
+        } catch (error) {
+            console.error('Error fetching enquiries:', error);
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     const handleLogout = async () => {
-        await supabase.auth.signOut();
+        await fetch('/api/auth/logout', { method: 'POST' });
         router.push('/admin');
     };
 

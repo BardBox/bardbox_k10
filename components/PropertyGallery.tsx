@@ -1,11 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import Image from 'next/image';
 
 const properties = [
   {
@@ -61,27 +57,7 @@ export default function PropertyGallery() {
     ? properties
     : properties.filter(prop => prop.type === activeFilter);
 
-  useGSAP(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (!prefersReducedMotion && cardsRef.current) {
-      const cards = gsap.utils.toArray('.property-card');
-
-      gsap.from(cards, {
-        y: 100,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: cardsRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-          once: true,
-        },
-      });
-    }
-  }, { scope: cardsRef });
 
   return (
     <section id="properties" ref={sectionRef} className="py-24 bg-white">
@@ -144,10 +120,13 @@ export default function PropertyGallery() {
               {/* Property Image */}
               <div className="relative h-80 overflow-hidden rounded-2xl shadow-lg">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10"></div>
-                <img
+                <Image
                   src={property.image}
                   alt={property.title}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
                 />
 
                 {/* Property Type Badge */}
@@ -171,28 +150,7 @@ export default function PropertyGallery() {
           ))}
         </div>
 
-        {/* Virtual Tour CTA */}
-        <div className="mt-20 text-center">
-          <div className="inline-flex flex-col sm:flex-row items-center gap-4 bg-gradient-to-r from-primary-rust to-primary-orange text-white px-8 py-6 rounded-2xl shadow-2xl">
-            <div className="flex items-center space-x-3">
-              <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-              </svg>
-              <div className="text-left">
-                <h3 className="font-bold text-lg">Virtual Tour Available</h3>
-                <p className="text-sm text-white/90">Experience properties from your home</p>
-              </div>
-            </div>
-            <a
-              href="https://k10group.in/virtual-tour/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-white text-primary-rust px-6 py-3 rounded-lg hover:bg-neutral-cream transition-all duration-300 font-semibold whitespace-nowrap"
-            >
-              Book Virtual Tour
-            </a>
-          </div>
-        </div>
+
       </div>
     </section>
   );
