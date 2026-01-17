@@ -178,7 +178,7 @@ export default function Footer() {
         <div className="container mx-auto px-4 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-400 text-sm text-center md:text-left">
-              © {currentYear} K10 INDEX. All rights reserved. | Designed with ❤️ for excellence
+              © {currentYear} K10 Group. All rights reserved. | Designed By BardBox DigiGrowth LLP
             </p>
 
             <div className="flex items-center space-x-6 text-sm">
