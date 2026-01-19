@@ -11,6 +11,9 @@ export const metadata: Metadata = {
     description: "Discover premium commercial properties in Vadodara",
     type: "website",
   },
+  icons: {
+    icon: '/k10-logo.png',
+  },
 };
 
 export default function RootLayout({

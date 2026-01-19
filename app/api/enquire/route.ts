@@ -4,14 +4,14 @@ import pool from '@/utils/db';
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { name, phone, email, budget, property_type, message } = body;
+        const { name, phone, email, budget, property_type, message, source } = body;
 
         const query = `
-            INSERT INTO enquiries (name, phone, email, budget, property_type, message)
-            VALUES ($1, $2, $3, $4, $5, $6)
+            INSERT INTO enquiries (name, phone, email, budget, property_type, message, source)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING *
         `;
-        const values = [name, phone, email, budget, property_type, message];
+        const values = [name, phone, email, budget, property_type, message, source];
 
         const res = await pool.query(query, values);
 

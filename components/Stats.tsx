@@ -5,7 +5,7 @@ import { useRef } from 'react';
 const stats = [
   {
     id: 1,
-    value: 500,
+    value: 5000,
     suffix: '+',
     label: 'Happy Clients',
     description: 'Satisfied customers across Vadodara',

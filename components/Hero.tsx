@@ -38,7 +38,7 @@ export default function Hero() {
         <div className="container mx-auto px-4 lg:px-8">
           <div ref={contentRef} className="max-w-4xl mx-auto text-white text-center">
             <div className="inline-block px-3 py-2 bg-primary-gold/30 backdrop-blur-md rounded-full mb-4 md:mb-6 border border-primary-gold/30">
-              <span className="text-primary-gold font-semibold text-[12px] md:text-lg drop-shadow-lg">Premium Properties</span>
+              <span className="text-primary-gold font-semibold text-[12px] md:text-lg drop-shadow-lg">Possession Started</span>
             </div>
 
             <h1 className="text-3xl md:text-6xl lg:text-7xl font-playfair font-bold mb-4 md:mb-6 leading-tight drop-shadow-2xl">
@@ -65,20 +65,20 @@ export default function Hero() {
               </button>
 
               <a
-                href="tel:+918000626586"
+                href="tel:+918799077477"
                 className="w-full sm:w-auto text-white px-8 py-3 rounded-full transition-all duration-300 border-2 border-white hover:bg-white hover:text-gray-900 font-semibold text-sm flex items-center justify-center gap-2"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <span>Call Now</span>
+                <span>Call Now (+91 87990 77477)</span>
               </a>
             </div>
 
             {/* Quick Stats */}
             <div className="mt-8 md:mt-16 grid grid-cols-3 gap-2 md:gap-8 max-w-3xl mx-auto bg-black/30 backdrop-blur-md rounded-2xl p-4 md:p-8 border border-white/10">
               <div className="text-center">
-                <div className="text-2xl md:text-5xl font-bold text-primary-gold mb-1 md:mb-2 drop-shadow-lg">500+</div>
+                <div className="text-2xl md:text-5xl font-bold text-primary-gold mb-1 md:mb-2 drop-shadow-lg">5000+</div>
                 <div className="text-xs md:text-base text-white font-medium">Happy Clients</div>
               </div>
               <div className="text-center border-x border-white/30">

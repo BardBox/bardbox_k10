@@ -54,9 +54,8 @@ export default function Location() {
                     <div>
                       <h4 className="font-semibold text-neutral-charcoal mb-1">Location</h4>
                       <p className="text-neutral-charcoal/70 text-sm">
-                        K10 INDEX, Opp. SURYA PALACE HOTEL<br />
-                        Parshuram Nagar, Sayajiganj<br />
-                        Vadodara, Gujarat 390007
+                        "K10 INDEX" opp. Grand Mercure Hotel,<br />
+                        Sayajigunj, Vadodara - 390005
                       </p>
                     </div>
                   </div>
@@ -71,11 +70,11 @@ export default function Location() {
                     <div>
                       <h4 className="font-semibold text-neutral-charcoal mb-1">Call Us</h4>
                       <div className="flex flex-col gap-1">
-                        <a href="tel:+918000626586" className="text-primary-rust font-semibold hover:underline">
-                          +91 80006 26586
+                        <a href="tel:+918799077477" className="text-primary-rust font-semibold hover:underline">
+                          +91 72280 95566
                         </a>
                         <a href="tel:+917228095566" className="text-primary-rust font-semibold hover:underline">
-                          +91 72280 95566
+                          +91 80006 26586
                         </a>
                       </div>
                     </div>
@@ -91,8 +90,7 @@ export default function Location() {
                     <div>
                       <h4 className="font-semibold text-neutral-charcoal mb-1">Working Hours</h4>
                       <p className="text-neutral-charcoal/70 text-sm">
-                        Monday - Saturday: 10:00 AM - 7:00 PM<br />
-                        Sunday: By Appointment
+                        Monday - Sunday: 10:00 AM - 8:00 PM
                       </p>
                     </div>
                   </div>

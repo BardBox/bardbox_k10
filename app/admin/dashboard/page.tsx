@@ -13,6 +13,7 @@ interface Enquiry {
     budget: string;
     property_type: string;
     message: string;
+    source?: string;
 }
 
 export default function Dashboard() {
@@ -94,7 +95,8 @@ export default function Dashboard() {
             Email: row.email,
             Budget: row.budget,
             'Property Type': row.property_type,
-            Message: row.message
+            Message: row.message,
+            Source: row.source || 'Direct'
         }));
 
         const worksheet = XLSX.utils.json_to_sheet(formattedData);
@@ -202,6 +204,7 @@ export default function Dashboard() {
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Budget</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Property Type</th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Source</th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
                                 </tr>
                             </thead>
@@ -231,6 +234,11 @@ export default function Dashboard() {
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{enquiry.email}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{enquiry.budget}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{enquiry.property_type}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${enquiry.source === 'direct' || !enquiry.source ? 'bg-gray-100 text-gray-800' : 'bg-blue-100 text-blue-800'}`}>
+                                                    {enquiry.source || 'Direct'}
+                                                </span>
+                                            </td>
                                             <td className="px-6 py-4 text-sm text-gray-500 max-w-xs truncate">{enquiry.message}</td>
                                         </tr>
                                     ))

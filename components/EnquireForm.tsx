@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function EnquireForm() {
   const [formData, setFormData] = useState({
@@ -26,6 +27,8 @@ export default function EnquireForm() {
 
   const propertyTypes = ['Shop', 'Office', 'Showroom', 'Terrace offices'];
 
+  const router = useRouter();
+
   const handlePropertyTypeChange = (type: string) => {
     setFormData((prev) => ({
       ...prev,
@@ -40,6 +43,10 @@ export default function EnquireForm() {
     setIsSubmitting(true);
 
     try {
+      // Get campaign source from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const source = urlParams.get('utm_campaign') || urlParams.get('utm_source') || 'direct';
+
       const response = await fetch('/api/enquire', {
         method: 'POST',
         headers: {
@@ -52,6 +59,7 @@ export default function EnquireForm() {
           budget: formData.budget,
           property_type: formData.propertyType.join(', '),
           message: formData.message,
+          source: source,
         }),
       });
 
@@ -59,8 +67,12 @@ export default function EnquireForm() {
         throw new Error('Failed to submit enquiry');
       }
 
-      console.log('SUCCESS!');
-      alert('Thank you! Your enquiry has been sent successfully.');
+      const result = await response.json();
+      console.log('SUCCESS!', result);
+
+      // Use existing urlParams or source logic
+      const campaign = source !== 'direct' ? source : 'success';
+      const submissionId = result.data?.id;
 
       // Reset form
       setFormData({
@@ -72,10 +84,12 @@ export default function EnquireForm() {
         message: '',
       });
 
+      // Redirect to thank you page
+      router.push(`/thank-you/${campaign}${submissionId ? `?ref=${submissionId}` : ''}`);
 
     } catch (error) {
       console.error('FAILED...', error);
-      alert('Failed to send message. Please try again later or contact us directly at +91 80006 26586');
+      alert('Failed to send message. Please try again later or contact us directly at +91 87990 77477');
     } finally {
       setIsSubmitting(false);
     }
